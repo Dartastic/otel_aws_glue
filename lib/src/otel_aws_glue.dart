@@ -2,7 +2,6 @@
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
 import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
-import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_aws_glue_suppression.dart';
 
@@ -82,89 +81,126 @@ Future<T> tracedAwsGlue<T>({
   final t = tracer ?? OTel.tracerProvider().getTracer('otel_aws_glue');
   final span = t.startSpan('aws_glue $operation', kind: SpanKind.client);
   try {
-    span.setStringAttribute('rpc.system', 'aws-api');
-    span.setStringAttribute('rpc.service', 'Glue');
-    span.setStringAttribute('rpc.method', operation);
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.system', 'aws-api')]));
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.service', 'Glue')]));
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.method', operation)]));
     final r = await invoke();
     final res = r.result;
     if (res != null) {
       if (res.region != null) {
-        span.setStringAttribute('aws.region', res.region!);
+        span.addAttributes(
+            OTel.attributes([OTel.attributeString('aws.region', res.region!)]));
       }
       if (res.account != null) {
-        span.setStringAttribute('aws.account.id', res.account!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.account.id', res.account!)]));
       }
       if (res.surface != null) {
-        span.setStringAttribute('aws.glue.surface', res.surface!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.surface', res.surface!)]));
       }
       if (res.jobName != null) {
-        span.setStringAttribute('aws.glue.job.name', res.jobName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.job.name', res.jobName!)]));
       }
       if (res.jobRunId != null) {
-        span.setStringAttribute('aws.glue.job.run_id', res.jobRunId!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.job.run_id', res.jobRunId!)]));
       }
       if (res.jobRunState != null) {
-        span.setStringAttribute('aws.glue.job.state', res.jobRunState!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.job.state', res.jobRunState!)]));
       }
       if (res.workerType != null) {
-        span.setStringAttribute('aws.glue.worker.type', res.workerType!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.worker.type', res.workerType!)]));
       }
       if (res.numberOfWorkers != null) {
-        span.setIntAttribute('aws.glue.worker.count', res.numberOfWorkers!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('aws.glue.worker.count', res.numberOfWorkers!)
+        ]));
       }
       if (res.glueVersion != null) {
-        span.setStringAttribute('aws.glue.version', res.glueVersion!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.version', res.glueVersion!)]));
       }
       if (res.executionTimeSec != null) {
-        span.setIntAttribute(
-            'aws.glue.execution_time_sec', res.executionTimeSec!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt(
+              'aws.glue.execution_time_sec', res.executionTimeSec!)
+        ]));
       }
       if (res.maxCapacityDpu != null) {
-        span.setDoubleAttribute(
-            'aws.glue.max_capacity_dpu', res.maxCapacityDpu!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeDouble('aws.glue.max_capacity_dpu', res.maxCapacityDpu!)
+        ]));
       }
       if (res.dpuSeconds != null) {
-        span.setDoubleAttribute('aws.glue.dpu_seconds', res.dpuSeconds!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeDouble('aws.glue.dpu_seconds', res.dpuSeconds!)]));
       }
       if (res.crawlerName != null) {
-        span.setStringAttribute('aws.glue.crawler.name', res.crawlerName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.crawler.name', res.crawlerName!)]));
       }
       if (res.crawlerState != null) {
-        span.setStringAttribute('aws.glue.crawler.state', res.crawlerState!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('aws.glue.crawler.state', res.crawlerState!)
+        ]));
       }
       if (res.tablesUpdated != null) {
-        span.setIntAttribute('aws.glue.tables_updated', res.tablesUpdated!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('aws.glue.tables_updated', res.tablesUpdated!)
+        ]));
       }
       if (res.tablesCreated != null) {
-        span.setIntAttribute('aws.glue.tables_created', res.tablesCreated!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt('aws.glue.tables_created', res.tablesCreated!)
+        ]));
       }
       if (res.databaseName != null) {
-        span.setStringAttribute('aws.glue.catalog.database', res.databaseName!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('aws.glue.catalog.database', res.databaseName!)
+        ]));
       }
       if (res.tableName != null) {
-        span.setStringAttribute('aws.glue.catalog.table', res.tableName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.catalog.table', res.tableName!)]));
       }
       if (res.workflowName != null) {
-        span.setStringAttribute('aws.glue.workflow.name', res.workflowName!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('aws.glue.workflow.name', res.workflowName!)
+        ]));
       }
       if (res.workflowRunId != null) {
-        span.setStringAttribute('aws.glue.workflow.run_id', res.workflowRunId!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('aws.glue.workflow.run_id', res.workflowRunId!)
+        ]));
       }
       if (res.workflowStatus != null) {
-        span.setStringAttribute(
-            'aws.glue.workflow.status', res.workflowStatus!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('aws.glue.workflow.status', res.workflowStatus!)
+        ]));
       }
       if (res.triggerName != null) {
-        span.setStringAttribute('aws.glue.trigger.name', res.triggerName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.trigger.name', res.triggerName!)]));
       }
       if (res.triggerState != null) {
-        span.setStringAttribute('aws.glue.trigger.state', res.triggerState!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('aws.glue.trigger.state', res.triggerState!)
+        ]));
       }
       if (res.statusCode != null) {
-        span.setIntAttribute('http.response.status_code', res.statusCode!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('http.response.status_code', res.statusCode!)]));
       }
       if (res.errorCode != null) {
-        span.setStringAttribute('aws.glue.error.code', res.errorCode!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('aws.glue.error.code', res.errorCode!)]));
       }
       final fail = res.errorCode != null ||
           (res.statusCode != null && res.statusCode! >= 400) ||
@@ -174,8 +210,10 @@ Future<T> tracedAwsGlue<T>({
           res.crawlerState == 'FAILED' ||
           res.workflowStatus == 'ERROR';
       if (fail) {
-        span.setStringAttribute(
-            ErrorResource.errorType.key, res.errorCode ?? 'aws_glue.error');
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString(
+              ErrorResource.errorType.key, res.errorCode ?? 'aws_glue.error')
+        ]));
         span.setStatus(SpanStatusCode.Error, res.errorMessage);
       }
     }
