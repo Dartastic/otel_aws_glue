@@ -1,6 +1,6 @@
 name: otel_aws_glue
 description: "Dartastic OpenTelemetry bridge for AWS Glue (ETL + Data Catalog)."
-version: 0.1.0-beta.2-wip
+version: 0.1.0-beta.2
 repository: https://github.com/dartastic/otel_aws_glue
 homepage: https://dartastic.io
 publish_to: https://pub.dartastic.io
